@@ -19,10 +19,6 @@ public class SpringDataJpaService {
 
     private final SpringDataJpaRepository repository;
 
-    public Todolist save(Todolist todolist) {
-        return repository.save(todolist);
-    }
-
     public void update(Long id, TodolistUpdateDto updateDto) {
         Todolist todolist = repository.findById(id).orElseThrow();
         todolist.setTodo(updateDto.getTodo());

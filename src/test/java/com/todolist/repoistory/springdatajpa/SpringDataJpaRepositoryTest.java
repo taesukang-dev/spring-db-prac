@@ -34,7 +34,7 @@ class SpringDataJpaRepositoryTest {
                 .isFinished(Boolean.FALSE)
                 .build();
         todolistRepository.save(builtItem);
-        Todolist foundedItem = todolistService.findById(builtItem.getId()).get();
+        Todolist foundedItem = todolistRepository.findById(builtItem.getId()).get();
         Assertions.assertThat(builtItem).isEqualTo(foundedItem);
     }
 
@@ -54,7 +54,7 @@ class SpringDataJpaRepositoryTest {
                 .build();
         todolistRepository.save(builtItem);
         todolistService.update(builtItem.getId(), updateParam);
-        Todolist updatedItem = todolistService.findById(builtItem.getId()).get();
+        Todolist updatedItem = todolistRepository.findById(builtItem.getId()).get();
 
         Assertions.assertThat(updatedItem.getContent()).isEqualTo(updateParam.getContent());
         Assertions.assertThat(updatedItem.getTodo()).isEqualTo(updateParam.getTodo());
