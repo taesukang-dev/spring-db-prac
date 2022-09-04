@@ -1,4 +1,4 @@
-# java todolist
+# todolist
 
 ## v1
 - jdbctemplate
