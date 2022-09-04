@@ -4,6 +4,7 @@ import com.todolist.domain.Todolist;
 import com.todolist.repoistory.TodolistRepository;
 import com.todolist.repoistory.TodolistSearchCond;
 import com.todolist.repoistory.TodolistUpdateDto;
+import com.todolist.service.TodolistService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.assertj.core.api.Assertions;
@@ -23,6 +24,9 @@ class JdbcTemplateRepositoryTest {
 
     @Autowired
     TodolistRepository todolistRepository;
+
+    @Autowired
+    TodolistService todolistService;
 
     @TestConfiguration
     @RequiredArgsConstructor
@@ -44,7 +48,7 @@ class JdbcTemplateRepositoryTest {
                 .isFinished(Boolean.FALSE)
                 .build();
         todolistRepository.save(builtItem);
-        Todolist foundedItem = todolistRepository.findById(builtItem.getId()).get();
+        Todolist foundedItem = todolistService.findById(builtItem.getId()).get();
         Assertions.assertThat(builtItem).isEqualTo(foundedItem);
     }
 
@@ -63,8 +67,8 @@ class JdbcTemplateRepositoryTest {
                 .isFinished(Boolean.TRUE)
                 .build();
         todolistRepository.save(builtItem);
-        todolistRepository.update(builtItem.getId(), updateParam);
-        Todolist updatedItem = todolistRepository.findById(builtItem.getId()).get();
+        todolistService.update(builtItem.getId(), updateParam);
+        Todolist updatedItem = todolistService.findById(builtItem.getId()).get();
 
         Assertions.assertThat(updatedItem.getContent()).isEqualTo(updateParam.getContent());
         Assertions.assertThat(updatedItem.getTodo()).isEqualTo(updateParam.getTodo());
@@ -99,7 +103,7 @@ class JdbcTemplateRepositoryTest {
 
         TodolistSearchCond searchCond = TodolistSearchCond.builder().todo("청소").isFinished(Boolean.FALSE).build();
 
-        List<Todolist> all = todolistRepository.findAll(searchCond);
+        List<Todolist> all = todolistService.findAll(searchCond);
         Assertions.assertThat(all.size()).isEqualTo(1);
     }
 
